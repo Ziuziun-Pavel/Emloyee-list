@@ -1,51 +1,29 @@
-import { Component } from 'react';
 
 import './employees-list-item.css';
 
-class EmployeesListItem extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            increase: false,
-            like: false
-        }
-    }
+ const EmployeesListItem = (props) => {
+      const {name, salary, onDelete, onToggleProp, increase, like} = props;
 
-    onIcrease = () => {
-        this.setState(({increase}) => ({
-            increase: !increase
-        }));
-    }
+      let classNames = "list-group-item d-flex justify-content-between";
 
-    onLike = () => {
-        this.setState(({like}) => ({
-            like: !like
-        }));
-    }
+      if (increase) {
+          classNames += ' increase';
+      }
 
-   render() {
-    const {name, salary, onDelete} = this.props;
-    const {increase, like} = this.state;
-    let classNames = "list-group-item d-flex justify-content-between";
-
-    if (increase) {
-        classNames += ' increase';
-    }
-
-    if (like) {
-        classNames += ' like';
-    }
+      if (like) {
+          classNames += ' like';
+      }
 
     return (
         <li className={classNames}>
             <span className="list-group-item-label"
-                  onClick={this.onLike}>{name}</span>
+                  onClick={onToggleProp} data-toggle="like">{name}</span>
             <input type="text" className="list-group-item-input" defaultValue={salary + '$'}/>
             <div className='d-flex justify-content-center align-items-center'>
                 <button 
                     type="button"
                     className="btn-cookie btn-sm"
-                    onClick={this.onIcrease}>
+                    onClick={onToggleProp} data-toggle="increase">
                     <i className="fas fa-cookie"></i>
                 </button>
 
@@ -60,6 +38,5 @@ class EmployeesListItem extends Component {
         </li>
     )
    }
-}
 
 export default EmployeesListItem;
